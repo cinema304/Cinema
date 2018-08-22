@@ -11,8 +11,8 @@
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <style>
-	@import "../res/css/Menu.css";
-	@import "../res/css/sales/Sales.css";
+	@import "../../../res/css/Menu.css";
+	@import "../../../res/css/sales/Sales.css";
 </style>
 <div class="container">
 	<br>
@@ -23,7 +23,7 @@
 	</div>
 	<br>
 	<div id="info">
-	  	<p>admin님, 로그인을 환영합니다.
+	  	<p>${userId}님, 로그인을 환영합니다.
 		<button type="button" class="btn btn-danger" onclick="location.href='../adminLogin/01.html'">로그아웃</button>
 		<button type="button" class="btn btn-success" onclick="location.href='사용자페이지.html'">사용자페이지</button></p>
 	</div>
@@ -88,13 +88,14 @@
 </div>
 </head>
 <body>
+
 <div class="container">
 <br>
 	<h2>▶영화별 매출통계</h2>
 <form id ="formSearch" class="form-inline">
 		<div class="form-group">
-			<label for="sel">영화명 &nbsp;</label>
-			<select class="form-control" id="sel">
+			<label for="movieName">영화명 &nbsp;</label>
+			<select class="form-control" id="movieName">
 				<option>전체</option>
 				<option>앤트맨</option>
 				<option>슈퍼맨</option>
@@ -105,20 +106,20 @@
 			</select>
 		</div>
 		<div class="form-group has-success has-feedback">
-			<label for="focusedInput">&nbsp;&nbsp; 기간 &nbsp;</label>
-			<input class="form-control" id="focusedInput" type="date">
+			<label for="timeStart">&nbsp;&nbsp; 기간 &nbsp;</label>
+			<input class="form-control" id="timeStart" type="date">
 			<span class="glyphicon glyphicon-ok form-control-feedback"></span>
 		</div>
 		<div class="form-group">
 			<p> ~ <p>
 		</div>
 		<div class="form-group has-success has-feedback">
-			<label for="inputSuccess2"></label>
-			<input type="date" class="form-control" id="inputSuccess2">
+			<label for="timeEnd"></label>
+			<input type="date" class="form-control" id="timeEnd">
 			<span class="glyphicon glyphicon-ok form-control-feedback"></span>
 		</div>
-		<div id="search" class="form-group">
-			<button type="button" id="search2" class="btn btn-success">검색</button>
+		<div class="form-group">
+			<button type="button" id="search" class="btn btn-success">검색</button>
 		</div>
 </form>
 <tbody>
@@ -131,16 +132,28 @@ google.charts.setOnLoadCallback(drawChart);
 
 function drawChart() {
 
+	var rowlen = $('#stickTable tr').length;
+	var collen = $('#stickTable tr').eq(0).find('th').length;
+	
+	var one = $('#stickTable tr').eq(0).find('th').eq(0).text();
+	var two = $('#stickTable tr').eq(1).find('th').eq(0).text();
+
+	var tmp = [];
+	var tot = [];
+	
+	for(var i=0; i<collen; i++){
+		tmp.push($('#stickTable tr').eq(0).find('th').eq(i).text());
+		if(i == 0)
+			tmp.push($('#stickTable tr').eq(1).find('th').eq(i).text());
+		else
+			tmp.push(Number($('#stickTable tr').eq(1).find('th').eq(i).text()));
+	
+		tot.push(tmp);
+		tmp = [];
+	}	
+	
 // 차트 데이터 설정
-var data = google.visualization.arrayToDataTable([
-	['구분', '매출'], // 항목 정의
-	['앤트맨', 100], // 항목, 값 (값은 숫자로 입력하면 그래프로 생성됨)
-	['슈퍼맨', 150],
-	['배트맨', 130],
-	['아이언맨', 80],
-	['토르', 250],
-	['헐크', 250]
-	]);
+var data = google.visualization.arrayToDataTable(tot);
 
 	// 그래프 옵션
 	var options = {
@@ -158,54 +171,27 @@ var data = google.visualization.arrayToDataTable([
 	var chart = new google.visualization.ColumnChart(document.getElementById('stickChart'));
 	chart.draw(data, options);
 }
+
 </script>
 <div class="col-xs-12">
 <p>(단위: 만원) (기간: ~ 2018-07-29)</p>
 </div>
 <table id="stickTable" class="table table-hover">
-	<tr class="info">
-		<th>구분</th>
-		<th>앤트맨</th>
-		<th>슈퍼맨</th>
-		<th>배트맨</th>
-		<th>아이언맨</th>
-		<th>토르</th>
-		<th>헐크</th>
-		<th>전체</th>
+	<tr>
+		<th class="info">영화</th>
+		<c:forEach var="sales" items="${totSales}">
+			<th class="info">${sales.movieName}</th>
+		</c:forEach>
 	</tr>
 	<tr>
 		<th class="danger">매출</th>
-		<td>100</td>
-		<td>150</td>
-		<td>80</td>
-		<td>100</td>
-		<td>120</td>
-		<td>750</td>
-		<td>1,350</td>
-	<tr>
+		<c:forEach var="sales" items="${totSales}">
+			<th>${sales.sales}</th>
+		</c:forEach>
+	</tr>
 </table>
 	<div id="excelSave">
-		<button type="button" id="saveExcel" class="btn btn-warnning" data-toggle="modal" data-target="#excelM">엑셀저장</button>
-	</div>
-
-
-												<!-- 엑셀저장 모달 -->
-	<div class="modal fade" id="excelM">
-		<div class="modal-dialog modal-sm">
-		
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modall-title">엑셀저장</h4>
-				</div>
-				<div class="modal-body">
-					<p>엑셀저장 성공</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
-				</div>
-			</div>
-		</div>
+		<button type="button" id="saveExcel" class="btn btn-warnning">엑셀저장</button>
 	</div>
 </tbody>
 </div>

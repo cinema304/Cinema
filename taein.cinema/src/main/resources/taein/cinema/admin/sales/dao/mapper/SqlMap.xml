@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="taein.cinema.admin.sales.dao.mapper.SalesMapper">
+	<select id="getMovieSales" parameterType="search" resultType="sales">
+		select m.m_title movieName, count(r.res_num)*avg(m.m_price) sales from reservations r join movies m
+		on r.m_num = m.m_num
+		<choose>
+		<when test="timeStart != null and timeEnd != null">
+			where r.res_date between #{timeStart} and #{timeEnd}
+		</when>
+		<otherwise>
+			where r.res_date between add_months(sysdate,-3) and sysdate
+		</otherwise>
+		</choose>
+		
+		<if test="movieName != null">
+			and m.m_title = #{movieName}
+		</if>
+		group by m.m_title
+		order by m.m_title
+	</select>
+</mapper>
