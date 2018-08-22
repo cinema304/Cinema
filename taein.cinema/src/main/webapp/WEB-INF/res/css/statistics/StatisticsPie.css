@@ -1,0 +1,27 @@
+@charset "utf-8";
+#formSearch{
+	float: right;
+}
+
+#pieChart{
+	float: left;
+}
+
+#pieTable{
+	float: right;
+	width: 300px; 
+	height: 100px;
+}
+
+th, td{
+	text-align : center;
+}
+
+#excelSave{
+	float: right;
+}
+#anotation{
+	float: right;
+	text-align : right;
+	margin-top:190px;
+}

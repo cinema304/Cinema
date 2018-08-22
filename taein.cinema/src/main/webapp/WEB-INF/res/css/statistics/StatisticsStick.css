@@ -1,0 +1,23 @@
+@charset "utf-8";
+#formSearch{
+	float: right;
+}
+#stickTable{
+	width : 1240;
+	margin-top : 30px;
+}
+
+th, td{
+	text-align : center;
+}
+
+#stickChart{
+	float: left;
+}
+
+#excelSave{
+	float: right;
+}
+#anotation{
+	text-align : right;
+}
