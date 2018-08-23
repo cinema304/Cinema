@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<title>태인이네영화관(관리자)-극장별매출통계</title>
+<title>태인이네영화관(관리자)-지역별예매율통계</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -12,7 +12,7 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <style>
 	@import "../res/css/Menu.css";
-	@import "../res/css/sales/Sales.css";
+	@import "../res/css/statistics/StatisticsStick.css";
 </style>
 <div class="container">
 	<br>
@@ -66,22 +66,22 @@
 			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 			매출관리 <span class="caret"></span></button>
 			<ul class="dropdown-menu">
-				<li><a href="01.html">기간별</a></li>
-				<li><a href="02.html">영화별</a></li>
-				<li><a href="03.html">극장별</a></li>
+				<li><a href="../adminSales/01.html">기간별</a></li>
+				<li><a href="../adminSales/02.html">영화별</a></li>
+				<li><a href="../adminSales/03.html">극장별</a></li>
 			</ul>
 		</div>
 		<div class="btn-group">
 			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 			통계관리 <span class="caret"></span></button>
 			<ul class="dropdown-menu">
-				<li><a href="../adminStatistic/01.html">성별</a></li>
-				<li><a href="../adminStatistic/02.html">지역별</a></li>
-				<li><a href="../adminStatistic/03.html">연령별</a></li>
-				<li><a href="../adminStatistic/04.html">시간별</a></li>
-				<li><a href="../adminStatistic/05.html">영화별</a></li>
-				<li><a href="../adminStatistic/06.html">회원비율</a></li>
-				<li><a href="../adminStatistic/07.html">평점</a></li>
+				<li><a href="01.html">성별</a></li>
+				<li><a href="02.html">지역별</a></li>
+				<li><a href="03.html">연령별</a></li>
+				<li><a href="04.html">시간별</a></li>
+				<li><a href="05.html">영화별</a></li>
+				<li><a href="06.html">회원비율</a></li>
+				<li><a href="07.html">평점</a></li>
 			</ul>
 		</div>
 	</div>
@@ -90,17 +90,29 @@
 <body>
 <div class="container">
 <br>
-	<h2>▶극장별 매출통계</h2>
+	<h2>▶지역별 예매율통계</h2>
 <form id ="formSearch" class="form-inline">
 		<div class="form-group">
-			<label for="sel">극장명 &nbsp;</label>
+			<label for="sel">지역 &nbsp;</label>
 			<select class="form-control" id="sel">
 				<option>전체</option>
-				<option>신촌점</option>
-				<option>이대점</option>
-				<option>마포점</option>
-				<option>합정점</option>
-				<option>홍대점</option>
+				<option>서울특별시</option>
+				<option>부산광역시</option>
+				<option>대구광역시</option>
+				<option>인천광역시</option>
+				<option>광주광역시</option>
+				<option>대전광역시</option>
+				<option>울산광역시</option>
+				<option>세종특별자치시</option>
+				<option>강원도</option>
+				<option>경기도</option>
+				<option>경상남도</option>
+				<option>경상북도</option>
+				<option>전라남도</option>
+				<option>전라북도</option>
+				<option>제주특별자치도</option>
+				<option>충청남도</option>
+				<option>충청북도</option>	
 			</select>
 		</div>
 		<div class="form-group has-success has-feedback">
@@ -132,21 +144,26 @@ function drawChart() {
 
 	// 차트 데이터 설정
 	var data = google.visualization.arrayToDataTable([
-		['구분', '매출'], // 항목 정의
-		['신촌점', 100], // 항목, 값 (값은 숫자로 입력하면 그래프로 생성됨)
-		['이대점', 150],
-		['마포점', 130],
-		['합정점', 80],
-		['홍대점', 250]
+		['구분', '예매율'], // 항목 정의
+		['서울', 4], // 항목, 값 (값은 숫자로 입력하면 그래프로 생성됨)
+		['대전', 6],
+		['대구', 8],
+		['부산', 10],
+		['제주', 2],
+		['강원', 4], 
+		['인천', 6],
+		['마산', 8],
+		['천안', 10],
+		['창원', 2]
 	]);
 
 	// 그래프 옵션
 	var options = {
-		title : '극장별 매출', // 제목
+		title : '지역별 예매율', // 제목
 		width : 1240, // 가로 px
 		height : 400, // 세로 px
 		bar : {
-			groupWidth : '30%' // 그래프 너비 설정 %
+			groupWidth : '50%' // 그래프 너비 설정 %
 		},
 		legend : {
 			position : 'none' // 항목 표시 여부 (현재 설정은 안함)
@@ -158,26 +175,34 @@ function drawChart() {
 }
 </script>
 <div class="col-xs-12">
-<p>(단위: 만원) (기간: ~ 2018-07-29)</p>
+<p id="anotation">(단위: 명) (기간: ~ 2018-07-29)</p>
 </div>
 <table id="stickTable" class="table table-hover">
 	<tr class="info">
 		<th>구분</th>
-		<th>신촌점</th>
-		<th>이대점</th>
-		<th>마포점</th>
-		<th>합정점</th>
-		<th>홍대점</th>
+		<th>서울</th>
+		<th>대전</th>
+		<th>대전</th>
+		<th>서울</th>
+		<th>대전</th>
+		<th>대전</th>
+		<th>서울</th>
+		<th>대전</th>
+		<th>대전</th>
 		<th>전체</th>
 	</tr>
 	<tr>
-		<th class="danger">매출</th>
-		<td>100</td>
-		<td>150</td>
-		<td>80</td>
-		<td>100</td>
-		<td>120</td>
-		<td>750</td>
+		<th class="danger">예매율</th>
+		<td>35</td>
+		<td>65</td>
+		<td>35</td>
+		<td>65</td>
+		<td>35</td>
+		<td>65</td>
+		<td>35</td>
+		<td>65</td>
+		<td>35</td>
+		<td>723</td>
 	<tr>
 </table>
 	<div id="excelSave">

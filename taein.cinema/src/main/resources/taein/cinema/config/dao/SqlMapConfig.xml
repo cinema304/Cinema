@@ -6,5 +6,7 @@
 		<typeAlias alias="user" type="taein.cinema.user.login.domain.User" />
 		<typeAlias alias="sales" type="taein.cinema.admin.sales.domain.Sales" />
 		<typeAlias alias="search" type="taein.cinema.admin.sales.domain.Search" />
+		<typeAlias alias="reservations" type="taein.cinema.admin.statistic.domain.Reservations" />
+		<typeAlias alias="resSearch" type="taein.cinema.admin.statistic.domain.Search" />
 	</typeAliases>	
 </configuration>

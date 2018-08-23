@@ -20,4 +20,25 @@
 		group by m.m_title
 		order by m.m_title
 	</select>
+	
+	<select id="getCinemaSales" parameterType="search" resultType="sales">
+		select c.c_n cinemaName, count(r.res_num)*avg(m.m_price) sales from reservations r join movies m
+		on r.m_num = m.m_num
+		join cinemas c
+		on r.c_num = c.c_num
+		<choose>
+		<when test="timeStart != null and timeEnd != null">
+			where r.res_date between #{timeStart} and #{timeEnd}
+		</when>
+		<otherwise>
+			where r.res_date between add_months(sysdate,-3) and sysdate
+		</otherwise>
+		</choose>
+		
+		<if test="cinemaName != null">
+			and c.c_n = #{cinemaName}
+		</if>
+		group by c.c_n
+		order by c.c_n
+	</select>
 </mapper>

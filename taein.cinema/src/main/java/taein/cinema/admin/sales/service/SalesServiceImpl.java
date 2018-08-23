@@ -16,4 +16,8 @@ public class SalesServiceImpl implements SalesService{
 	public List<Sales> getMovieSales(Search saerch){
 		return salesDao.getMovieSales(saerch);
 	}
+	
+	public List<Sales> getCinemaSales(Search saerch){
+		return salesDao.getCinemaSales(saerch);
+	}
 }

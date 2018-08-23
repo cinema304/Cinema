@@ -9,9 +9,6 @@
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <style>
-	@import "../res/css/Menu.css";
-</style>
-<style>
 @charset "utf-8";
 #stickTable{
 	width : 540px;
@@ -47,93 +44,7 @@ h2{
 	margin-top: 20px;
 }
 </style>
-<div class="container">
-<div id="logOutM" class="modal fade">
-	<div class="modal-dialog modal-sm">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-			</div>
-			<div class="modal-body">
-				<p id="msg">로그아웃 성공</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="close" data-dismiss="modal" onclick="location.href='../adminLogin/01.html'">확인</button>
-			</div>
-		</div>
-	</div>
-</div>
-	<br>
-	<div id="logo">
-		<a href="../adminMain/01.html">
-		<img src="../res/img/logo.jpg" width="200" height="50" alt="logo" />
-		</a>
-	</div>
-	<br>
-	<div id="info">
-	  	<p>admin님, 로그인을 환영합니다.
-		<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#logOutM">로그아웃</button>
-		<button type="button" class="btn btn-success" onclick="location.href='사용자페이지.html'">사용자페이지</button></p>
-	</div>
-	<div class="btn-group btn-group-justified">
-		<div class="btn-group">
-			<button type="button" class="btn btn-primary" onclick="location.href='../adminNotice/01.html'">공지사항</button>
-		</div>
-		<div class="btn-group">
-			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-			회원관리 <span class="caret"></span></button>
-			<ul class="dropdown-menu">
-				<li><a href="../adminUser/01.html">회원관리</a></li>
-				<li><a href="../adminUser/02.html">직원관리</a></li>
-			</ul>
-		</div>
-		<div class="btn-group">
-			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-			영화관리 <span class="caret"></span></button>
-			<ul class="dropdown-menu">
-				<li><a href="../adminMovie/01.html">영화등록</a></li>
-				<li><a href="../adminMovie/02.html">영화수정/삭제</a></li>
-				<li><a href="../adminMovie/03.html">리뷰관리</a></li>
-				<li><a href="../adminMovie/05.html">신고관리</a></li>
-			</ul>
-		</div>
-		<div class="btn-group">
-			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-			극장관리 <span class="caret"></span></button>
-			<ul class="dropdown-menu">
-				<li><a href="../adminCinema/01.html">극장등록</a></li>
-				<li><a href="../adminCinema/02.html">극장수정/삭제</a></li>
-				<li><a href="../adminCinema/03.html">영화등록</a></li>
-				<li><a href="../adminCinema/05.html">영화수정/삭제</a></li>
-			</ul>
-		</div>
-		<div class="btn-group">
-			<button type="button" class="btn btn-primary" onclick="location.href='../adminReservation/01.html'">예매관리</button>
-		</div>
-		<div class="btn-group">
-			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-			매출관리 <span class="caret"></span></button>
-			<ul class="dropdown-menu">
-				<li><a href="../adminSales/01.html">기간별</a></li>
-				<li><a href="../adminSales/02.html">영화별</a></li>
-				<li><a href="../adminSales/03.html">극장별</a></li>
-			</ul>
-		</div>
-		<div class="btn-group">
-			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-			통계관리 <span class="caret"></span></button>
-			<ul class="dropdown-menu">
-				<li><a href="../adminStatistic/01.html">성별</a></li>
-				<li><a href="../adminStatistic/02.html">지역별</a></li>
-				<li><a href="../adminStatistic/03.html">연령별</a></li>
-				<li><a href="../adminStatistic/04.html">시간별</a></li>
-				<li><a href="../adminStatistic/05.html">영화별</a></li>
-				<li><a href="../adminStatistic/06.html">회원비율</a></li>
-				<li><a href="../adminStatistic/07.html">평점</a></li>
-			</ul>
-		</div>
-	</div>
-</div>
+<%@ include file="../menu.jsp" %>
 </head>
 <body>
 <div class="container">

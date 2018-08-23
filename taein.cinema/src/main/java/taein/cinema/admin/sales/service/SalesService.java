@@ -7,4 +7,5 @@ import taein.cinema.admin.sales.domain.Search;
 
 public interface SalesService {
 	List<Sales> getMovieSales(Search saerch);
+	List<Sales> getCinemaSales(Search saerch);
 }

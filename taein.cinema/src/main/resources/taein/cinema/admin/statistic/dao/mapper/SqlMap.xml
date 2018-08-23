@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="taein.cinema.admin.statistic.dao.mapper.StatisticMapper">
+	<select id="getUserSexRes" parameterType="resSearch" resultType="reservations">
+		select u.u_gen sex, count(u.u_num) resCount from capitalist ca join users u on ca.u_id = u.u_id
+		join reservations r on r.capitalist_num = ca.capitalist_num
+		<choose>
+		<when test="timeStart != null and timeEnd != null">
+			where r.res_date between #{timeStart} and #{timeEnd}
+		</when>
+		<otherwise>
+			where r.res_date between add_months(sysdate,-3) and sysdate
+		</otherwise>
+		</choose>
+		group by u.u_gen
+	</select>
+
+	<select id="getNotUserSexRes" parameterType="resSearch" resultType="reservations">
+		select n.u_gen sex, count(n.notuser_num) resCount from capitalist ca join notusers n on ca.notuser_num = n.notuser_num
+		join reservations r on r.capitalist_num = ca.capitalist_num
+		<choose>
+		<when test="timeStart != null and timeEnd != null">
+			where r.res_date between #{timeStart} and #{timeEnd}
+		</when>
+		<otherwise>
+			where r.res_date between add_months(sysdate,-3) and sysdate
+		</otherwise>
+		</choose>
+		group by n.u_gen
+	</select>
+</mapper>

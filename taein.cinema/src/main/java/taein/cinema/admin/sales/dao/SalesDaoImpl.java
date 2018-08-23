@@ -16,4 +16,8 @@ public class SalesDaoImpl implements SalesDao{
 	public List<Sales> getMovieSales(Search saerch){
 		return salesMapper.getMovieSales(saerch);
 	}
+	
+	public List<Sales> getCinemaSales(Search saerch){
+		return salesMapper.getCinemaSales(saerch);
+	}
 }
