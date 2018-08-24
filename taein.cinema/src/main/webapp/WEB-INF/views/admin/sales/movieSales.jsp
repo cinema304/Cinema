@@ -115,10 +115,13 @@ function drawChart() {
 	
 	for(var i=0; i<collen; i++){
 		tmp.push($('#stickTable tr').eq(0).find('th').eq(i).text());
-		if(i == 0)
+		if(i == 0){
 			tmp.push($('#stickTable tr').eq(1).find('th').eq(i).text());
-		else
-			tmp.push(Number($('#stickTable tr').eq(1).find('th').eq(i).text()));
+		}else{
+			var tmp2 = ($('#stickTable tr').eq(1).find('th').eq(i).text());
+			tmp2 = tmp2.replace(/\,/g,'');
+			tmp.push(Number(tmp2));
+		}		
 	
 		tot.push(tmp);
 		tmp = [];

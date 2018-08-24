@@ -88,45 +88,78 @@ th, td{
 		</div>
 </form>
 <tbody>
-<script>
-google.charts.load('current', {'packages':['corechart']});
-</script>
 <div id="pieChart" style="width: 800px; height: 500px;"></div>
 <script>
-google.charts.setOnLoadCallback(drawChart);
+google.charts.load('current', {'packages':['corechart']});
 
-function drawChart() {
+function comma(num){
+    var len, point, str; 
+       
+    num = num + ""; 
+    point = num.length % 3 ;
+    len = num.length; 
+   
+    str = num.substring(0, point); 
+    while (point < len) { 
+        if (str != "") str += ","; 
+        str += num.substring(point, point + 3); 
+        point += 3; 
+    }   
+    return str;
+}
 
-	var rowlen = $('#pieTable tr').length;
+$(function(){
 	var collen = $('#pieTable tr').eq(0).find('th').length;
 	
-	var one = $('#pieTable tr').eq(0).find('th').eq(0).text();
-	var two = $('#pieTable tr').eq(1).find('th').eq(0).text();
-
 	var tmp = [];
-	var tot = [];
 	
-	for(var i=0; i<collen; i++){
-		tmp.push($('#pieTable tr').eq(0).find('th').eq(i).text());
-		if(i == 0)
-			tmp.push($('#pieTable tr').eq(1).find('th').eq(i).text());
-		else
-			tmp.push(Number($('#pieTable tr').eq(1).find('th').eq(i).text()));
+	for(var i=1; i<collen; i++){
+		tmp = $('#pieTable tr').eq(1).find('th').eq(i).text();
+		tmp = comma(tmp);
+		console.log(tmp);
+		$('#pieTable tr').eq(1).find('th').eq(i).text(tmp);
+	}
+});
 	
-		tot.push(tmp);
-		tmp = [];
-	}	
-	
-var data = google.visualization.arrayToDataTable(tot);
+	function drawChart() {
 
-var options = {
-     title: '성별 예매 통계'
-};
+		var rowlen = $('#pieTable tr').length;
+		var collen = $('#pieTable tr').eq(0).find('th').length;
+		
+		var one = $('#pieTable tr').eq(0).find('th').eq(0).text();
+		var two = $('#pieTable tr').eq(1).find('th').eq(0).text();
 
-var chart = new google.visualization.PieChart(document.getElementById('pieChart'));
+		var tmp = [];
+		var tot = [];
+		
+		for(var i=0; i<collen; i++){
+			tmp.push($('#pieTable tr').eq(0).find('th').eq(i).text());
+			if(i == 0){
+				tmp.push($('#pieTable tr').eq(1).find('th').eq(i).text());
+			}else{
+				var tmp2 = ($('#pieTable tr').eq(1).find('th').eq(i).text());
+				tmp2 = tmp2.replace(/\,/g,'');
+				tmp.push(Number(tmp2));
+			}
+		
+			console.log(tmp);
+			tot.push(tmp);
+			tmp = [];
+		}	
+		
+	var data = google.visualization.arrayToDataTable(tot);
 
-chart.draw(data, options);
-}
+	var options = {
+	     title: '성별 예매 통계'
+	};
+
+	var chart = new google.visualization.PieChart(document.getElementById('pieChart'));
+
+	chart.draw(data, options);
+	}
+
+
+google.charts.setOnLoadCallback(drawChart);
 </script>
 <div>
 <p id="vol">(단위: 명) (기간: ${timeStart} ~ ${timeEnd})</p>

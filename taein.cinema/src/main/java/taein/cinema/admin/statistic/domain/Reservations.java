@@ -16,7 +16,7 @@ public class Reservations {
 	public void setResCount(Integer resCount) {
 		this.resCount = resCount;
 	}
-	
+
 	@Override
 	public String toString() {
 		return String.format("%s %s", sex, resCount);

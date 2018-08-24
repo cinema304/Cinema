@@ -3,7 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="taein.cinema.admin.sales.dao.mapper.SalesMapper">
 	<select id="getMovieSales" parameterType="search" resultType="sales">
-		select m.m_title movieName, count(r.res_num)*avg(m.m_price) sales from reservations r join movies m
+		select m.m_title movieName, to_char(count(r.res_num)*avg(m.m_price), '999,999,999,999,999') sales from reservations r join movies m
 		on r.m_num = m.m_num
 		<choose>
 		<when test="timeStart != null and timeEnd != null">
@@ -22,7 +22,7 @@
 	</select>
 	
 	<select id="getCinemaSales" parameterType="search" resultType="sales">
-		select c.c_n cinemaName, count(r.res_num)*avg(m.m_price) sales from reservations r join movies m
+		select c.c_n cinemaName, to_char(count(r.res_num)*avg(m.m_price), '999,999,999,999,999') sales from reservations r join movies m
 		on r.m_num = m.m_num
 		join cinemas c
 		on r.c_num = c.c_num

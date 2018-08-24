@@ -3,7 +3,7 @@ package taein.cinema.admin.sales.domain;
 public class Sales {
 	private String movieName;
 	private String cinemaName;
-	private Integer sales;
+	private String sales;
 	
 	public String getMovieName() {
 		return movieName;
@@ -11,7 +11,7 @@ public class Sales {
 	public String getCinemaName() {
 		return cinemaName;
 	}
-	public Integer getSales() {
+	public String getSales() {
 		return sales;
 	}
 	public void setMovieName(String movieName) {
@@ -20,7 +20,7 @@ public class Sales {
 	public void setCinemaName(String cinemaName) {
 		this.cinemaName = cinemaName;
 	}
-	public void setSales(Integer sales) {
+	public void setSales(String sales) {
 		this.sales = sales;
 	}
 
