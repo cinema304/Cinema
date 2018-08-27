@@ -113,7 +113,7 @@ $(function(){
 			},
 			success:function(result){
 				if(result.is === true){
-					$("#msgModal #msg").text(result.overId);
+					$("#msgModal #msg").append(result.overId);
 					$("#userId").val("");
 				}
 				else $("#msgModal #msg").text("사용할 수 있는 아이디입니다.");
@@ -137,7 +137,7 @@ $(function(){
 			data: $("#userAddForm").serialize(),
 			success:function(result){
 				if(result.is === true){
-					$("#msgModal #msg").text("이미 등록된 아이디입니다. 아이디 중복체크 후 회원가입해주세요.");
+					$("#msgModal #msg").text(result.errMsg);
 					$("#userId").val("");
 					$("#msgModal").modal("show");
 				}else {

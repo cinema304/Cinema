@@ -72,13 +72,23 @@ public class LoginController {
 		String sms = user.getUserSms();
 		if(sms == null) user.setUserSms("N");
 		
+		Result result = new Result();
 		List<User> users = userService.listUsers();
-		boolean is = false;
+				boolean is = false;
 		for(User usertmp : users){
-			if(usertmp.getUserId().equals(user.getUserId())) is = true;
+			if(usertmp.getUserId().equals(user.getUserId())){
+				is = true;
+				result.setErrMsg("이미 등록된 아이디입니다. 아이디 중복체크 후 회원가입해주세요.");
+			}
+		}
+		for(User usertmp : users){
+			if(usertmp.getUserEmail().equals(user.getUserEmail())){
+				is = true;
+				result.setErrMsg("이미 등록한 이메일입니다.<br><a href='/inquiryId'>아이디 찾기</a> | " +
+												"<a href='/inquiryPw'>비밀번호 찾기</a>");
+			}
 		}
 		
-		Result result = new Result();
 		result.setIs(is);
 		
 		if(!is){
