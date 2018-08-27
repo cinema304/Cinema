@@ -10,13 +10,13 @@ import taein.cinema.user.login.domain.User;
 
 @Repository
 public class LoginDaoImpl implements LoginDao{
-	@Autowired private LoginMapper userMapper;
+	@Autowired private LoginMapper loginMapper;
 	
 	public List<User> getUsers(){
-		return userMapper.getUsers();
+		return loginMapper.getUsers();
 	}
 	
 	public int addUser(User user){
-		return this.userMapper.addUser(user);
+		return this.loginMapper.addUser(user);
 	}
 }

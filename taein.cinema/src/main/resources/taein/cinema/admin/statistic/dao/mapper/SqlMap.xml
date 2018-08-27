@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="taein.cinema.admin.statistic.dao.mapper.StatisticMapper">
-	<select id="getUserSexRes" parameterType="resSearch" resultType="reservations">
+	<select id="getUserSexRes" parameterType="resSearch" resultType="sexReservations">
 		select u.u_gen sex, count(u.u_num) resCount from capitalist ca join users u on ca.u_id = u.u_id
 		join reservations r on r.capitalist_num = ca.capitalist_num
 		<choose>
@@ -16,7 +16,7 @@
 		group by u.u_gen
 	</select>
 
-	<select id="getNotUserSexRes" parameterType="resSearch" resultType="reservations">
+	<select id="getNotUserSexRes" parameterType="resSearch" resultType="sexReservations">
 		select n.u_gen sex, count(n.notuser_num) resCount from capitalist ca join notusers n on ca.notuser_num = n.notuser_num
 		join reservations r on r.capitalist_num = ca.capitalist_num
 		<choose>
@@ -28,5 +28,22 @@
 		</otherwise>
 		</choose>
 		group by n.u_gen
+	</select>
+	
+	<select id="getLocalRes" parameterType="resSearch" resultType="localReservations">
+		select c.c_ci_adr local, to_char(count(r.res_num), '999,999,999') resCount from reservations r join cinemas c
+		on r.c_num = c.c_num
+		<choose>
+		<when test="timeStart != null and timeEnd != null">
+			where r.res_date between #{timeStart} and #{timeEnd}
+		</when>
+		<otherwise>
+			where r.res_date between add_months(sysdate,-3) and sysdate
+		</otherwise>
+		</choose>
+		<if test="localSea != null">
+			and c.c_ci_adr like '%'||#{localSea}||'%'
+		</if>
+		group by c.c_ci_adr
 	</select>
 </mapper>

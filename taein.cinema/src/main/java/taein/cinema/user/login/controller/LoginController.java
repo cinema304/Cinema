@@ -20,7 +20,7 @@ import taein.cinema.user.login.service.LoginService;
 @Controller
 @RequestMapping("/")
 public class LoginController {
-	@Autowired private LoginService userService;
+	@Autowired private LoginService loginService;
 	
 	@RequestMapping
 	public String now(){
@@ -36,7 +36,7 @@ public class LoginController {
 	public String logIn(User user, String remember, Model model, HttpServletResponse response, HttpSession session){
 		String userId = user.getUserId();
 		String userPw = user.getUserPw();
-		List<User> users = userService.listUsers();
+		List<User> users = loginService.listUsers();
 		
 		for(User usertmp:users){
 			if(usertmp.getUserId().equals(userId) && usertmp.getUserPw().equals(userPw)){
@@ -73,7 +73,7 @@ public class LoginController {
 		if(sms == null) user.setUserSms("N");
 		
 		Result result = new Result();
-		List<User> users = userService.listUsers();
+		List<User> users = loginService.listUsers();
 				boolean is = false;
 		for(User usertmp : users){
 			if(usertmp.getUserId().equals(user.getUserId())){
@@ -84,15 +84,14 @@ public class LoginController {
 		for(User usertmp : users){
 			if(usertmp.getUserEmail().equals(user.getUserEmail())){
 				is = true;
-				result.setErrMsg("이미 등록한 이메일입니다.<br><a href='/inquiryId'>아이디 찾기</a> | " +
-												"<a href='/inquiryPw'>비밀번호 찾기</a>");
+				result.setErrMsg("이미 등록한 이메일입니다.");
 			}
 		}
 		
 		result.setIs(is);
 		
 		if(!is){
-			userService.join(user);
+			loginService.join(user);
 		}
 		return result;
 	}
@@ -102,7 +101,7 @@ public class LoginController {
 	public Result overlap(String userId){
 		Result result = new Result();
 		
-		List<User> users = userService.listUsers();
+		List<User> users = loginService.listUsers();
 		boolean is = false;
 		for(User usertmp : users){
 			if(usertmp.getUserId().equals(userId)){	
@@ -136,7 +135,7 @@ public class LoginController {
 		String userName = user.getUserName();
 		String userEmail = user.getUserEmail();
 		
-		List<User> users = userService.listUsers();
+		List<User> users = loginService.listUsers();
 		boolean is = false;
 		for(User usertmp : users){
 			if(usertmp.getUserName().equals(userName) && usertmp.getUserEmail().equals(userEmail)){ 
@@ -145,7 +144,7 @@ public class LoginController {
 		}
 		
 		if(is) {
-			String num = userService.sendId(user.getUserEmail());
+			String num = loginService.sendId(user.getUserEmail());
 			session.setAttribute("num", num);
 			session.setAttribute("inqUserName", userName);
 			session.setAttribute("inqUserEmail", userEmail);
@@ -174,7 +173,7 @@ public class LoginController {
 		if(num.equals(conNum)) is=true;
 
 		if(is) {				
-			List<User> users = userService.listUsers();
+			List<User> users = loginService.listUsers();
 			for(User usertmp : users){
 				if(usertmp.getUserName().equals(userName)
 						&& usertmp.getUserEmail().equals(userEmail)){ 
@@ -200,7 +199,7 @@ public class LoginController {
 		String userName = user.getUserName();
 		String userEmail = user.getUserEmail();
 		
-		List<User> users = userService.listUsers();
+		List<User> users = loginService.listUsers();
 		boolean is = false;
 		for(User usertmp : users){
 			if(usertmp.getUserId().equals(userId) && 
@@ -211,7 +210,7 @@ public class LoginController {
 		}
 		
 		if(is) {
-			String num = userService.sendPw(user.getUserEmail());
+			String num = loginService.sendPw(user.getUserEmail());
 			session.setAttribute("num", num);
 			session.setAttribute("inqUserId", userId);
 			session.setAttribute("inqUserName", userName);
@@ -244,7 +243,7 @@ public class LoginController {
 		if(num.equals(conNum)) is=true;
 
 		if(is) {
-			List<User> users = userService.listUsers();
+			List<User> users = loginService.listUsers();
 			for(User usertmp : users){
 				if(usertmp.getUserId().equals(userId)
 					&& usertmp.getUserName().equals(userName)

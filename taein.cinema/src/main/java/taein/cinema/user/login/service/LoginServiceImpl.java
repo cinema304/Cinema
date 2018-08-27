@@ -16,17 +16,17 @@ import taein.cinema.user.login.domain.User;
 
 @Service
 public class LoginServiceImpl implements LoginService{
-	@Autowired private LoginDao userDao;
+	@Autowired private LoginDao loginDao;
 	@Autowired JavaMailSender mailSender;
 	
 	@Transactional
 	public List<User> listUsers(){
-		return userDao.getUsers();
+		return loginDao.getUsers();
 	}
 	
 	@Transactional
 	public boolean join(User user){
-		return userDao.addUser(user)>0;
+		return loginDao.addUser(user)>0;
 	}
 	
 	@Transactional

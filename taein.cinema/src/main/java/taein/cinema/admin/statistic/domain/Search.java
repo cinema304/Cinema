@@ -1,9 +1,16 @@
 package taein.cinema.admin.statistic.domain;
 
 public class Search {
+	private String localSea;
 	private String timeStart;
 	private String timeEnd;
 	
+	public String getLocalSea() {
+		return localSea;
+	}
+	public void setLocalSea(String localSea) {
+		this.localSea = localSea;
+	}
 	public String getTimeStart() {
 		return timeStart;
 	}

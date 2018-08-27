@@ -1,6 +1,6 @@
 package taein.cinema.admin.statistic.domain;
 
-public class Reservations {
+public class SexReservations {
 	private String sex;
 	private Integer resCount;
 	

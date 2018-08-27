@@ -167,14 +167,14 @@ google.charts.setOnLoadCallback(drawChart);
 <table id="pieTable" class="table table-hover">
 	<tr>
 		<th class="info">성별</th>
-		<c:forEach var="reservations" items="${sexVol}">
-			<th class="info">${reservations.sex}</th>
+		<c:forEach var="sexReservations" items="${sexVol}">
+			<th class="info">${sexReservations.sex}</th>
 		</c:forEach>
 	</tr>
 	<tr>
 		<th class="danger">예매수</th>
-		<c:forEach var="reservations" items="${sexVol}">
-			<th>${reservations.resCount}</th>
+		<c:forEach var="sexReservations" items="${sexVol}">
+			<th>${sexReservations.resCount}</th>
 		</c:forEach>
 	</tr>
 </table>
