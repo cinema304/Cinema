@@ -11,117 +11,91 @@
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <style>
-	@import "../res/css/Menu.css";
-	@import "../res/css/statistics/StatisticsStick.css";
+#formSearch{
+	float: right;
+}
+#stickTable{
+	margin-top : 30px;
+}
+
+th, td{
+	text-align : center;
+}
+
+#stickChart{
+	float: left;
+}
+#excelSave{
+	float: right;
+}
+#vol{
+	text-align : right;
+}
 </style>
-<div class="container">
-	<br>
-	<div id="logo">
-		<a href="../adminMain/01.html">
-		<img src="../res/img/logo.jpg" width="200" height="50" alt="logo" />
-		</a>
-	</div>
-	<br>
-	<div id="info">
-	  	<p>admin님, 로그인을 환영합니다.
-		<button type="button" class="btn btn-danger" onclick="location.href='../adminLogin/01.html'">로그아웃</button>
-		<button type="button" class="btn btn-success" onclick="location.href='사용자페이지.html'">사용자페이지</button></p>
-	</div>
-	<div class="btn-group btn-group-justified">
-		<div class="btn-group">
-			<button type="button" class="btn btn-primary" onclick="location.href='../adminNotice/01.html'">공지사항</button>
-		</div>
-		<div class="btn-group">
-			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-			회원관리 <span class="caret"></span></button>
-			<ul class="dropdown-menu">
-				<li><a href="../adminUser/01.html">회원관리</a></li>
-				<li><a href="../adminUser/02.html">직원관리</a></li>
-			</ul>
-		</div>
-		<div class="btn-group">
-			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-			영화관리 <span class="caret"></span></button>
-			<ul class="dropdown-menu">
-				<li><a href="../adminMovie/01.html">영화등록</a></li>
-				<li><a href="../adminMovie/02.html">영화수정/삭제</a></li>
-				<li><a href="../adminMovie/03.html">리뷰관리</a></li>
-				<li><a href="../adminMovie/05.html">신고관리</a></li>
-			</ul>
-		</div>
-		<div class="btn-group">
-			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-			극장관리 <span class="caret"></span></button>
-			<ul class="dropdown-menu">
-				<li><a href="../adminCinema/01.html">극장등록</a></li>
-				<li><a href="../adminCinema/02.html">극장수정/삭제</a></li>
-				<li><a href="../adminCinema/03.html">영화등록</a></li>
-				<li><a href="../adminCinema/05.html">영화수정/삭제</a></li>
-			</ul>
-		</div>
-		<div class="btn-group">
-			<button type="button" class="btn btn-primary" onclick="location.href='../adminReservation/01.html'">예매관리</button>
-		</div>
-		<div class="btn-group">
-			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-			매출관리 <span class="caret"></span></button>
-			<ul class="dropdown-menu">
-				<li><a href="../adminSales/01.html">기간별</a></li>
-				<li><a href="../adminSales/02.html">영화별</a></li>
-				<li><a href="../adminSales/03.html">극장별</a></li>
-			</ul>
-		</div>
-		<div class="btn-group">
-			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-			통계관리 <span class="caret"></span></button>
-			<ul class="dropdown-menu">
-				<li><a href="01.html">성별</a></li>
-				<li><a href="02.html">지역별</a></li>
-				<li><a href="03.html">연령별</a></li>
-				<li><a href="04.html">시간별</a></li>
-				<li><a href="05.html">영화별</a></li>
-				<li><a href="06.html">회원비율</a></li>
-				<li><a href="07.html">평점</a></li>
-			</ul>
+<%@ include file="../menu.jsp" %>
+	<div class="modal fade" id="errMsgM">
+		<div class="modal-dialog modal-sm">
+		
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" onclick="location.href='/admin/statistic/ageVol'">&times;</button>
+					<h4 class="modall-title">지역별 예매율통계</h4>
+				</div>
+				<div class="modal-body">
+					<p>${errMsg}</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" onclick="location.href='/admin/statistic/ageVol'">확인</button>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
 </head>
 <body>
 <div class="container">
+<%
+	if(request.getAttribute("errMsg")!=null){
+%>
+	<script>
+		$('#errMsgM').modal({backdrop: 'static', keyboard: false});
+		$("#errMsgM").modal("show");
+	</script>
+<%
+	}
+%>
 <br>
 	<h2>▶연령별 예매율통계</h2>
-<form id ="formSearch" class="form-inline">
+<form id ="formSearch" class="form-inline" method="post">
 		<div class="form-group">
-			<label for="sel">연령 &nbsp;</label>
-			<select class="form-control" id="sel">
-				<option>전체</option>
-				<option>10</option>
-				<option>20</option>
-				<option>30</option>
-				<option>40</option>
-				<option>50</option>
-				<option>60</option>
-				<option>70</option>
-				<option>80</option>
-				<option>90</option>
+			<label for="ageSeaStart">연령 &nbsp;</label>
+			<select class="form-control" id="ageSeaStart" name="ageSeaStart">
+				<option value="" selected disabled hidden>전체</option>
+				<option value="10">10대</option>
+				<option value="20">20대</option>
+				<option value="30">30대</option>
+				<option value="40">40대</option>
+				<option value="50">50대</option>
+				<option value="60">60대</option>
+				<option value="70">70대</option>
+				<option value="80">80대</option>
+				<option value="90">90대</option>
 			</select>
 		</div>
 		<div class="form-group has-success has-feedback">
-			<label for="focusedInput">&nbsp;&nbsp;기간 &nbsp;</label>
-			<input class="form-control" id="focusedInput" type="date">
+			<label for="timeStart">&nbsp;&nbsp;기간 &nbsp;</label>
+			<input type="date" class="form-control" id="timeStart" name="timeStart" required>
 			<span class="glyphicon glyphicon-ok form-control-feedback"></span>
 		</div>
 		<div class="form-group">
 			<p> ~ <p>
 		</div>
 		<div class="form-group has-success has-feedback">
-			<label for="inputSuccess2"></label>
-			<input type="date" class="form-control" id="inputSuccess2">
+			<label for="tiemEnd"></label>
+			<input type="date" class="form-control" id="timeEnd" name="timeEnd" required>
 			<span class="glyphicon glyphicon-ok form-control-feedback"></span>
 		</div>
-		<div id="search" class="form-group">
-			<button type="button" id="search2" class="btn btn-success">검색</button>
+		<div class="form-group">
+			<button type="submit" id="search" class="btn btn-success">검색</button>
 		</div>
 </form>
 <tbody>
@@ -132,21 +106,62 @@ google.charts.load('current', {packages:['corechart']});
 <script>
 google.charts.setOnLoadCallback(drawChart);
 
+function comma(num){
+    var len, point, str; 
+       
+    num = num + ""; 
+    point = num.length % 3 ;
+    len = num.length; 
+   
+    str = num.substring(0, point); 
+    while (point < len) { 
+        if (str != "") str += ","; 
+        str += num.substring(point, point + 3); 
+        point += 3; 
+    }   
+    return str;
+}
+
+$(function(){
+	var collen = $('#stickTable tr').eq(0).find('th').length;
+	
+	var tmp = [];
+	
+	for(var i=1; i<collen; i++){
+		tmp = $('#stickTable tr').eq(1).find('th').eq(i).text();
+		tmp = comma(tmp);
+		console.log(tmp);
+		$('#stickTable tr').eq(1).find('th').eq(i).text(tmp);
+	}
+});
+
 function drawChart() {
+	
+	var rowlen = $('#stickTable tr').length;
+	var collen = $('#stickTable tr').eq(0).find('th').length;
+	
+	var one = $('#stickTable tr').eq(0).find('th').eq(0).text();
+	var two = $('#stickTable tr').eq(1).find('th').eq(0).text();
+
+	var tmp = [];
+	var tot = [];
+	
+	for(var i=0; i<collen; i++){
+		tmp.push($('#stickTable tr').eq(0).find('th').eq(i).text());
+		if(i == 0){
+			tmp.push($('#stickTable tr').eq(1).find('th').eq(i).text());
+		}else{
+			var tmp2 = ($('#stickTable tr').eq(1).find('th').eq(i).text());
+			tmp2 = tmp2.replace(/\,/g,'');
+			tmp.push(Number(tmp2));
+		}		
+	
+		tot.push(tmp);
+		tmp = [];
+	}	
 
 	// 차트 데이터 설정
-	var data = google.visualization.arrayToDataTable([
-		['구분', '', '예매율'], // 항목 정의
-		['10대', 0,30], // 항목, 값 (값은 숫자로 입력하면 그래프로 생성됨)
-		['20대', 0,20],
-		['30대', 0,15],
-		['40대', 0,10],
-		['50대', 0,1],
-		['60대', 0,2], 
-		['70대', 0,9],
-		['80대', 0,2],
-		['90대', 0,8]
-	]);
+	var data = google.visualization.arrayToDataTable(tot);
 
 	// 그래프 옵션
 	var options = {
@@ -154,7 +169,7 @@ function drawChart() {
 		width : 1240, // 가로 px
 		height : 400, // 세로 px
 		bar : {
-			groupWidth : '100%' // 그래프 너비 설정 %
+			groupWidth : '50%' // 그래프 너비 설정 %
 		},
 		legend : {
 			position : 'none' // 항목 표시 여부 (현재 설정은 안함)
@@ -166,58 +181,24 @@ function drawChart() {
 }
 </script>
 <div class="col-xs-12">
-<p id="anotation">(단위: 명) (기간: ~ 2018-07-29)</p>
+<p id="vol">(단위: 명) (기간: ${timeStart} ~ ${timeEnd})</p>
 </div>
 <table id="stickTable" class="table table-hover">
-	<tr class="info">
-		<th>구분</th>
-		<th>10대</th>
-		<th>20대</th>
-		<th>30대</th>
-		<th>40대</th>
-		<th>50대</th>
-		<th>60대</th>
-		<th>70대</th>
-		<th>80대</th>
-		<th>90대</th>
-		<th>전체</th>
+	<tr>
+		<th class="info">연령</th>
+		<c:forEach var="ageReservations" items="${ageVol}">
+			<th class="info">${ageReservations.age}</th>
+		</c:forEach>
 	</tr>
 	<tr>
-		<th class="danger">예매율</th>
-		<td>30</td>
-		<td>20</td>
-		<td>10</td>
-		<td>6</td>
-		<td>5</td>
-		<td>1</td>
-		<td>2</td>
-		<td>5</td>
-		<td>5</td>
-		<td>723</td>
-	<tr>
+		<th class="danger">예매수</th>
+		<c:forEach var="ageReservations" items="${ageVol}">
+			<th>${ageReservations.resCount}</th>
+		</c:forEach>
+	</tr>
 </table>
 	<div id="excelSave">
-		<button type="button" id="saveExcel" class="btn btn-warnning" data-toggle="modal" data-target="#excelM">엑셀저장</button>
-	</div>
-
-
-												<!-- 엑셀저장 모달 -->
-	<div class="modal fade" id="excelM">
-		<div class="modal-dialog modal-sm">
-		
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modall-title">엑셀저장</h4>
-				</div>
-				<div class="modal-body">
-					<p>엑셀저장 성공</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
-				</div>
-			</div>
-		</div>
+		<button type="button" id="saveExcel" class="btn btn-warnning">엑셀저장</button>
 	</div>
 </tbody>
 </div>

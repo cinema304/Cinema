@@ -129,7 +129,7 @@ function drawChart() {
 	
 var data = google.visualization.arrayToDataTable(tot);
 	var options = {
-		title : '극장별 매출', // 제목
+		title : '영화별 매출', // 제목
 		width : 1240, // 가로 px
 		height : 400, // 세로 px
 		bar : {

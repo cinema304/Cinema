@@ -163,7 +163,7 @@ function drawChart() {
 		</c:forEach>
 	</tr>
 	<tr>
-		<th class="danger">예매율</th>
+		<th class="danger">예매수</th>
 		<c:forEach var="localReservations" items="${localVol}">
 			<th>${localReservations.resCount}</th>
 		</c:forEach>

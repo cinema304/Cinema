@@ -8,6 +8,11 @@
 		<typeAlias alias="search" type="taein.cinema.admin.sales.domain.Search" />
 		<typeAlias alias="sexReservations" type="taein.cinema.admin.statistic.domain.SexReservations" />
 		<typeAlias alias="localReservations" type="taein.cinema.admin.statistic.domain.LocalReservations" />
+		<typeAlias alias="ageReservations" type="taein.cinema.admin.statistic.domain.AgeReservations" />
+		<typeAlias alias="timeReservations" type="taein.cinema.admin.statistic.domain.TimeReservations" />
+		<typeAlias alias="movieReservations" type="taein.cinema.admin.statistic.domain.MovieReservations" />
+		<typeAlias alias="userReservations" type="taein.cinema.admin.statistic.domain.UserReservations" />
+		<typeAlias alias="gradeReservations" type="taein.cinema.admin.statistic.domain.GradeReservations" />
 		<typeAlias alias="resSearch" type="taein.cinema.admin.statistic.domain.Search" />
 	</typeAliases>	
 </configuration>

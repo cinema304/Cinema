@@ -46,4 +46,113 @@
 		</if>
 		group by c.c_ci_adr
 	</select>
+	
+	<select id="getUserAgeRes" parameterType="resSearch" resultType="ageReservations">
+		select count(r.res_num) resCount from capitalist ca join users u on ca.u_id = u.u_id
+		join reservations r on r.capitalist_num = ca.capitalist_num
+		<choose>
+			<when test="timeStart != null and timeEnd != null">
+				where r.res_date between #{timeStart} and #{timeEnd}
+			</when>
+			<otherwise>
+				where r.res_date between add_months(sysdate,-3) and sysdate
+			</otherwise>
+		</choose>
+		and to_char(sysdate, 'yyyy')-to_char(u.u_db,'yyyy')+1 between #{ageSeaStart} and #{ageSeaEnd}
+		group by u.u_db
+	</select>
+
+	<select id="getNotUserAgeRes" parameterType="resSearch" resultType="ageReservations">
+		select count(r.res_num) resCount from capitalist ca join notusers n on ca.notuser_num = n.notuser_num
+		join reservations r on r.capitalist_num = ca.capitalist_num
+		<choose>
+			<when test="timeStart != null and timeEnd != null">
+				where r.res_date between #{timeStart} and #{timeEnd}
+			</when>
+			<otherwise>
+				where r.res_date between add_months(sysdate,-3) and sysdate
+			</otherwise>
+		</choose>
+		and to_char(sysdate, 'yyyy')-to_char(n.u_db,'yyyy')+1 between #{ageSeaStart} and #{ageSeaEnd}
+		group by n.u_db
+	</select>
+	
+	<select id="getTimeRes" parameterType="resSearch" resultType="timeReservations">
+		select substr(res_time, 1,2) time, to_char(count(res_time), '999,999,999') resCount from reservations
+		<choose>
+			<when test="timeStart != null and timeEnd != null">
+				where res_date between #{timeStart} and #{timeEnd}
+			</when>
+			<otherwise>
+				where res_date between add_months(sysdate,-3) and sysdate
+			</otherwise>
+		</choose>
+		<if test="timeSea != null">
+			and substr(res_time, 1,2) = #{timeSea}
+		</if>
+		group by substr(res_time, 1,2)
+		order by substr(res_time, 1,2)
+	</select>
+	
+	<select id="getMovieRes" parameterType="resSearch" resultType="movieReservations">
+		select m.m_title movie, to_char(count(r.res_num), '999,999,999') resCount from movies m join reservations r
+		on m.m_num = r.m_num
+		<choose>
+			<when test="timeStart != null and timeEnd != null">
+				where res_date between #{timeStart} and #{timeEnd}
+			</when>
+			<otherwise>
+				where res_date between add_months(sysdate,-3) and sysdate
+			</otherwise>
+		</choose>
+		<if test="movieSea != null">
+			and m.m_title = #{movieSea}
+		</if>
+		group by m.m_title
+	</select>
+	
+	<select id="getUserRes" parameterType="resSearch" resultType="userReservations">
+		select to_char(count(u.u_id), '999,999,999') resCount from capitalist ca join users u on ca.u_id = u.u_id
+		join reservations r on r.capitalist_num = ca.capitalist_num
+		<choose>
+			<when test="timeStart != null and timeEnd != null">
+				where res_date between #{timeStart} and #{timeEnd}
+			</when>
+			<otherwise>
+				where res_date between add_months(sysdate,-3) and sysdate
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="getNotUserRes" parameterType="resSearch" resultType="userReservations">
+		select to_char(count(n.notuser_num), '999,999,999') resCount from capitalist ca join notusers n on ca.notuser_num = n.notuser_num
+		join reservations r on r.capitalist_num = ca.capitalist_num
+		<choose>
+			<when test="timeStart != null and timeEnd != null">
+				where res_date between #{timeStart} and #{timeEnd}
+			</when>
+			<otherwise>
+				where res_date between add_months(sysdate,-3) and sysdate
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="getGradeRes" parameterType="resSearch" resultType="gradeReservations">
+		select m.m_title movie, avg(re.r_grade) grade from reviews re join movies m
+		on m.m_num = re.m_num
+		join reservations r
+		on m.m_num = r.m_num
+		<choose>
+			<when test="timeStart != null and timeEnd != null">
+				where res_date between #{timeStart} and #{timeEnd}
+			</when>
+			<otherwise>
+				where res_date between add_months(sysdate,-3) and sysdate
+			</otherwise>
+		</choose>
+		<if test="movieSea != null">
+			and m.m_title = #{movieSea}
+		</if>
+		group by m.m_title
+	</select>
 </mapper>
