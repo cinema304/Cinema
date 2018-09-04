@@ -155,12 +155,14 @@ a{color:inherit;text-decoration:none}
 .foot-lnk{
 	text-align:center;
 }
-.login-html .title{
+.title{
 	text-align:center;
+	color:white;
 	font-size:28px;
 }
 .msg{
 	color:red;
+	font-size:16px;
 	text-align:left;
 }
 </style>
@@ -182,39 +184,39 @@ a{color:inherit;text-decoration:none}
 			%>
 		<form method="post" class="group">
 			<div class="login-html">
-				<div id="title">
+				<div class="title">
 					<strong>관리자 페이지 - 로그인</strong><br><br><br>
+				</div>
 				<input id="tab-1" type="radio" name="tab" class="sign-in" checked>
 				<label for="tab-1" class="tab">로그인</label>
 				<input id="tab-2" type="radio" name="tab" class="sign-up">
 				<label for="tab-2" class="tab"><a href="userAdd">회원가입</a></label>
-					<div class="login-form">
-						<div class="sign-in-htm">
-							<div class="group">				
-								<label class="label" for="id">ID</label>
-								<input type="text" class="input" maxlength="12" id="id" name="userId" value="<%= saveUserId %>" placeholder="Enter Id" required><br><br>
+				<div class="login-form">
+					<div class="sign-in-htm">
+						<div class="group">				
+							<label class="label" for="id">ID</label>
+							<input type="text" class="input" maxlength="12" id="id" name="userId" value="<%= saveUserId %>" placeholder="Enter Id" required><br>
+						</div>
+						<div class="group">
+							<label class="label" for="pwd">Password</label>
+							<input type="password" class="input" maxlength="12" id="pwd" name="userPw" placeholder="Enter password" required>
+						</div>
+						<div class="group">			
+							<div class="checkbox">
+								<input id="check" type="checkbox" class="check" name="remember" value="Y" checked><label for="check"><span class="icon"></span>아이디 저장</label>
 							</div>
-							<div class="group">
-								<label class="label" for="pwd">Password</label>
-								<input type="password" class="input" maxlength="12" id="pwd" name="userPw" placeholder="Enter password" required>
-							</div><br>
-							<div class="group">			
-								<div class="checkbox">
-									<input id="check" type="checkbox" class="check" name="remember" value="Y" checked><label for="check"><span class="icon"></span>아이디 저장</label>
-								</div>
-							</div>
-							<div class="group">
-								<button type="submit" method="post" formaction="logIn" class="button">로그인</button>
-							</div>
-							<div class="form-group">
-								<strong id="msg">${msg}</strong>
-							</div>
-							<div class="hr"></div>
-							<div class="foot-lnk">
-								<div>					
-									<a href="inquiryId">아이디 찾기</a> |						
-									<a href="inquiryPw">비밀번호 찾기</a>
-								</div>
+						</div>
+						<div class="group">
+							<button type="submit" method="post" formaction="logIn" class="button">로그인</button>
+						</div>
+						<div class="form-group">
+							<strong class="msg">${msg}</strong>
+						</div>
+						<div class="hr"></div>
+						<div class="foot-lnk">
+							<div>					
+								<a href="inquiryId">아이디 찾기</a> |						
+								<a href="inquiryPw">비밀번호 찾기</a>
 							</div>
 						</div>
 					</div>

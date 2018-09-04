@@ -14,12 +14,77 @@
 #all, h2{
 	text-align:center;
 }
-table{
-	margin:auto;
-}
 #time{
 	color: red;
 	font-weight:bold;
+}
+body{
+	margin:0;
+	color:#6a6f8c;
+	background:#c8c8c8;
+	font:600 16px/18px 'Open Sans',sans-serif;
+}
+*,:after,:before{box-sizing:border-box}
+.clearfix:after,.clearfix:before{content:'';display:table}
+.clearfix:after{clear:both;display:block}
+a{color:inherit;text-decoration:none}
+
+.login-wrap{
+	width:100%;
+	margin:auto;
+	max-width:525px;
+	min-height:670px;
+	position:relative;
+	background:url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg) no-repeat center;
+	box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
+}
+.login-html{
+	width:100%;
+	height:100%;
+	position:absolute;
+	padding:90px 70px 50px 70px;
+	background:rgba(40,57,101,.9);
+}
+
+.login-form .group{
+	margin-bottom:15px;
+}
+
+.login-form .group .input,
+.login-form .group .button{
+	width:100%;
+	color:#fff;
+	display:block;
+	border:none;
+	padding:15px 20px;
+	border-radius:25px;
+	background:rgba(255,255,255,.1);
+}
+
+.login-form .group .button{
+	background:#1161ee;
+}
+
+.hr{
+	height:2px;
+	margin:60px 0 50px 0;
+	background:rgba(255,255,255,.2);
+}
+
+.hr2{
+	height:2px;
+	margin:40px 0 30px 0;
+	background:rgba(255,255,255,.2);
+}
+
+.foot-lnk{
+	text-align:center;
+}
+
+.title{
+	text-align:center;
+	color:white;
+	font-size:28px;
 }
 </style>
 <script>
@@ -77,13 +142,13 @@ AuthTimer.domId = document.getElementById("timer");
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" onclick="location.href='/inquiryId'">×</button>
+                <button type="button" class="close" data-dismiss="modal" onclick="location.href='inquiryId'">×</button>
             </div>
             <div class="modal-body">
                 <p id="msg">인증시간이 초과되었습니다. 다시 인증을 시도해주세요.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="close" data-dismiss="modal" onclick="location.href='/inquiryId'">확인</button>
+                <button type="button" class="close" data-dismiss="modal" onclick="location.href='inquiryId'">확인</button>
             </div>
         </div>
     </div>
@@ -100,9 +165,7 @@ $(function(){
 			success:function(result){
 				if(result.is === true){
 					$("#all").empty();
-					$("#all").append("<h4>귀하의 아이디는 "+result.userId+"입니다.</h4><br>" +
-										"<a href ='/logOut'>로그인 하러가기</a> | " +	
-										"<a href ='/inquiryPw'>비밀번호 찾기</a>");
+					$("#all").append("<h4>귀하의 아이디는 "+result.userId+"입니다.</h4><br>");
 					clearInterval(AuthTimer.timer);
 				}else {
 					$("#msgModal #msg").html("<p>"+result.errMsg+"</p>");
@@ -134,43 +197,43 @@ $(function(){
 </div>
 </head>
 <body>
-<div class="container">
-<h2>아이디찾기</h2>
-<hr>
-<div id = "all">
-<h3>인증번호 입력</h3>
-<form>
-<table>
-	<tr>
-		<td></td>
-		<td width="300"><input id="confiNum" name="confiNum" maxlength="6" oninput="maxLengthCheck(this)" class="form-control" type="number" placeholder = "인증번호 6자리 숫자 입력"></td>
-		<td><p id="time"></p></td>
-	</tr>
-	<tr>
-		<td></td>
-		<td colspan="2"><a href="#" id="msg" data-toggle="tooltip" data-placement="right"
-		title="스팸 메일로 분류된 것은 아닌지 확인해 주세요. 스팸 메일함에도 메일이 없다면, 다시 한 번 '인증번호 받기'를 눌러주세요.">
-		인증번호가 오지 않나요?</a></td>
-	</tr>
-</table>
-<button type="button" class="btn btn-default" id="inquiryIdOk">확인</button>
-<br>
-<hr>
-<a href ="/logOut">로그인 하러가기</a> |	
-<a href ="/inquiryPw">비밀번호 찾기</a>
-<script>
-function maxLengthCheck(object){
-	if(object.value.length > object.maxLength){
-		object.value = object.value.slice(0, object.maxLength);
-	}
-}
-</script>
-</form>
+<div class="login-wrap">
+	<form>
+		<div class="login-html">
+			<div class="login-form">
+				<div class="title">
+					<strong>아이디찾기</strong>
+				</div>
+				<div class="hr2"></div>
+				<div class="group" id = "all">
+					<h3>인증번호 입력</h3><br>
+					<input id="confiNum" name="confiNum" maxlength="6" oninput="maxLengthCheck(this)" class="input" type="number" placeholder = "인증번호 6자리 숫자 입력"><br>
+					<p id="time"></p><br>
+					<a href="#" id="msg" data-toggle="tooltip" data-placement="right"
+					title="스팸 메일로 분류된 것은 아닌지 확인해 주세요. 스팸 메일함에도 메일이 없다면, 다시 한 번 '인증번호 받기'를 눌러주세요.">
+					인증번호가 오지 않나요?</a><br><br>
+					<button type="button" class="button" id="inquiryIdOk">확인</button>
+				</div>
+				<br>
+				<div class="hr"></div>
+				<div class="foot-lnk">
+					<a href ="logOut">로그인 하러가기</a> |	
+					<a href ="inquiryPw">비밀번호 찾기</a>
+				</div>
+				<script>
+				function maxLengthCheck(object){
+					if(object.value.length > object.maxLength){
+						object.value = object.value.slice(0, object.maxLength);
+					}
+				}
+				</script>				
+			</div>
+		</div>
+		<script>
+		$(document).ready(function(){
+			$('[data-toggle="tooltip"]').tooltip();
+		});
+		</script>
+	</form>
 </div>
-</div>
-<script>
-$(document).ready(function(){
-	$('[data-toggle="tooltip"]').tooltip();
-});
-</script>
 </body>
